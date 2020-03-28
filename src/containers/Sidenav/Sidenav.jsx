@@ -1,11 +1,12 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import {fade, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -20,8 +21,12 @@ import Badge from '@material-ui/core/Badge';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import AddIcon from '@material-ui/icons/Add';
 
-const drawerWidth = 240;
+const drawerWidth = 400;
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -35,11 +40,13 @@ const useStyles = makeStyles(theme => ({
         flexShrink: 0,
     },
     drawerPaper: {
+        paddingTop: 50,
         width: drawerWidth,
     },
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
     content: {
+        paddingTop: 50,
         flexGrow: 1,
         padding: theme.spacing(3),
         transition: theme.transitions.create('margin', {
@@ -55,6 +62,61 @@ const useStyles = makeStyles(theme => ({
         }),
         marginLeft: 0,
     },
+    grow: {
+        flexGrow: 1,
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        display: 'none',
+        [theme.breakpoints.up('sm')]: {
+            display: 'block',
+        },
+    },
+    search: {
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.common.white, 0.25),
+        },
+        marginRight: theme.spacing(2),
+        marginLeft: 0,
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: theme.spacing(3),
+            width: 'auto',
+        },
+    },
+    searchIcon: {
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    inputRoot: {
+        color: 'inherit',
+    },
+    inputInput: {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+            width: '20ch',
+        },
+    },
+    sectionDesktop: {
+        display: 'none',
+        [theme.breakpoints.up('md')]: {
+            display: 'flex',
+        },
+    }
 }));
 const menuId = 'primary-search-account-menu';
 export default function SideNav() {
@@ -69,11 +131,45 @@ export default function SideNav() {
     const handleProfileMenuOpen = event => {
         setAnchorEl(event.currentTarget);
     };
+    const toggleDrawer = (anchor, open) => event => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+    };
+
+    const list = anchor => (
+        <div
+            className={clsx(classes.list, {
+                [classes.fullList]: anchor === 'top' || anchor === 'bottom',
+            })}
+            role="presentation"
+            onClick={toggleDrawer(anchor, false)}
+            onKeyDown={toggleDrawer(anchor, false)}
+        >
+            <List>
+                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                    <ListItem button key={text}>
+                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                        <ListItemText primary={text} />
+                    </ListItem>
+                ))}
+            </List>
+            <Divider />
+            <List>
+                {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                    <ListItem button key={text}>
+                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                        <ListItemText primary={text} />
+                    </ListItem>
+                ))}
+            </List>
+        </div>
+    );
 
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <AppBar position="fixed" className={classes.appBar}>
+            <AppBar color="white" position="fixed" className={classes.appBar}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -102,13 +198,16 @@ export default function SideNav() {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <IconButton aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <MailIcon />
+                        <IconButton color="white">
+                            <Badge color="secondary">
+                                <PersonAddIcon />
+                                <Typography>
+                                    Invite member
+                                </Typography>
                             </Badge>
                         </IconButton>
-                        <IconButton aria-label="show 17 new notifications" color="inherit">
-                            <Badge badgeContent={17} color="secondary">
+                        <IconButton color="white">
+                            <Badge badgeContent={1} color="secondary">
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
@@ -124,6 +223,17 @@ export default function SideNav() {
                         </IconButton>
                     </div>
                 </Toolbar>
+                <div style={{display: 'flex', paddingBottom: '10px'}}>
+                    {['All', 'Board', 'Graph', 'Recent'].map(anchor => (
+                        <React.Fragment key={anchor}>
+                            <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+                            <Drawer anchor={anchor} onClose={toggleDrawer(anchor, false)}>
+                                {list(anchor)}
+                            </Drawer>
+                        </React.Fragment>
+                    ))}
+                    <MoreVertIcon />
+                </div>
             </AppBar>
             <Drawer
                 className={classes.drawer}
@@ -134,6 +244,10 @@ export default function SideNav() {
                 }}
             >
                 <div className={classes.toolbar} />
+                <div style={{display:'flex', justifyContent:'flex-end'}}>
+                    <Button ><AddIcon /></Button>
+                    <Button><ChevronLeftIcon onClick={handleChangeDrawer} /></Button>
+                </div>
                 <List>
                     {['sample 1', 'sample 2', 'sample 3', 'sample 4'].map((text, index) => (
                         <ListItem button key={text}>
