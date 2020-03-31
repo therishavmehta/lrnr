@@ -1,12 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import {fade, makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -14,17 +9,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import MenuIcon from '@material-ui/icons/Menu';
-import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
-import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import AddIcon from '@material-ui/icons/Add';
+import { Navigationbar, Sidenav } from '../../components';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const drawerWidth = 400;
 
@@ -169,103 +155,9 @@ export default function SideNav() {
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <AppBar color="white" position="fixed" className={classes.appBar}>
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleChangeDrawer}
-                        edge="start"
-                        className={clsx(classes.menuButton, open && classes.hide)}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap>
-                        Lrnr
-          </Typography>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </div>
-                    <div className={classes.grow} />
-                    <div className={classes.sectionDesktop}>
-                        <IconButton color="white">
-                            <Badge color="secondary">
-                                <PersonAddIcon />
-                                <Typography>
-                                    Invite member
-                                </Typography>
-                            </Badge>
-                        </IconButton>
-                        <IconButton color="white">
-                            <Badge badgeContent={1} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                    </div>
-                </Toolbar>
-                <div style={{display: 'flex', paddingBottom: '10px'}}>
-                    {['All', 'Board', 'Graph', 'Recent'].map(anchor => (
-                        <React.Fragment key={anchor}>
-                            <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-                            <Drawer anchor={anchor} onClose={toggleDrawer(anchor, false)}>
-                                {list(anchor)}
-                            </Drawer>
-                        </React.Fragment>
-                    ))}
-                    <MoreVertIcon />
-                </div>
-            </AppBar>
-            <Drawer
-                className={classes.drawer}
-                variant="persistent"
-                open={open}
-                classes={{
-                    paper: classes.drawerPaper, open
-                }}
-            >
-                <div className={classes.toolbar} />
-                <div style={{display:'flex', justifyContent:'flex-end'}}>
-                    <Button ><AddIcon /></Button>
-                    <Button><ChevronLeftIcon onClick={handleChangeDrawer} /></Button>
-                </div>
-                <List>
-                    {['sample 1', 'sample 2', 'sample 3', 'sample 4'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
-                <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
-            </Drawer>
+            <Navigationbar classes={classes} handleChangeDrawer={handleChangeDrawer} open={open} handleProfileMenuOpen={handleProfileMenuOpen}
+             toggleDrawer={toggleDrawer} list={list} menuId={menuId}/>
+            <Sidenav classes={classes} open={open} handleChangeDrawer={handleChangeDrawer}/>
             <main
                 className={clsx(classes.content, {
                     [classes.contentShift]: open,
