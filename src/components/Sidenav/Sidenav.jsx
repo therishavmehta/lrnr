@@ -10,7 +10,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AddIcon from '@material-ui/icons/Add';
-
+import { RecursiveTreeView} from '../../components';
 
 function Sidenav(props) {
     const {classes, open, handleChangeDrawer} = props;
@@ -30,22 +30,8 @@ function Sidenav(props) {
                 <IconButton ><AddIcon /></IconButton>
                 <IconButton><ChevronLeftIcon onClick={handleChangeDrawer} /></IconButton>
             </div>
-            <List>
-                {['sample 1', 'sample 2', 'sample 3', 'sample 4'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-            </List>
-            <Divider />
-            <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
+            <List style={{textAlign: 'left'}}>
+                <RecursiveTreeView />
             </List>
         </Drawer>
     );
