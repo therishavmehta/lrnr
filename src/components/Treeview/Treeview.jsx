@@ -41,16 +41,26 @@ const useStyles = makeStyles({
 
 function RecursiveTreeView() {
     const classes = useStyles();
+    const addLibrary = (node) => {
+        console.log(node);
+    }
+    const addChildren = (node) => {
+        console.log(node);
+    }
+
+    const showContent = (node) => {
+        console.log(`${JSON.stringify(node)}`);
+    }
 
     const renderTree = (nodes) => (
-        <TreeItem style={{height: '24px'}} key={nodes.id} nodeId={nodes.id} label={
+        <TreeItem onClick={() => showContent(nodes)} style={{height: '24px'}} key={nodes.id} nodeId={nodes.id} label={
             <div style={{display:'flex', justifyContent: 'space-between'}}>
                 <Typography align='center'>{nodes.name}</Typography>
                 {nodes.hasOwnProperty('children') && <div>
-                <IconButton >
+                <IconButton onClick={() => addLibrary(nodes)}>
                     <LibraryAddIcon />
                 </IconButton>
-                <IconButton >
+                    <IconButton onClick={() => addChildren(nodes)}>
                     <AddIcon />
                 </IconButton>
             </div>}
