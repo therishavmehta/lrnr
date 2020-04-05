@@ -18,7 +18,7 @@ import { Menu, MenuItem, Divider } from '@material-ui/core';
 import Switch from '@material-ui/core/Switch';
 
 function Navigationbar(props) {
-    const {classes, handleChangeDrawer, open, toggleDrawer, list, menuId} = props;
+    const {classes, handleChangeDrawer, open, toggleDrawer, menuId} = props;
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [ProfileMoreAnchorEl, setProfileMoreAnchorEl] = React.useState(null);
@@ -81,7 +81,7 @@ function Navigationbar(props) {
 
     return (
         <div >
-        <AppBar color="white" position="fixed" className={classes.appBar}>
+        <AppBar color="transparent" position="fixed" className={classes.appBar}>
             <Toolbar>
                 <IconButton
                     color="inherit"
@@ -139,9 +139,6 @@ function Navigationbar(props) {
                 {['All', 'Board', 'Graph', 'Recent'].map(anchor => (
                     <React.Fragment key={anchor}>
                         <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-                        <Drawer anchor={anchor} onClose={toggleDrawer(anchor, false)}>
-                            {list(anchor)}
-                        </Drawer>
                     </React.Fragment>
                 ))}
                 <MoreVertIcon />
