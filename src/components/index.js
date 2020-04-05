@@ -1,5 +1,6 @@
 import Navigationbar from './Navigationbar';
 import Sidenav from './Sidenav';
 import RecursiveTreeView from './Treeview';
-
-export { Navigationbar, Sidenav, RecursiveTreeView};
+// import Texteditor from './Texteditor';
+import Editor from './Editor';
+export { Navigationbar, Sidenav, RecursiveTreeView, Editor};

@@ -1,3 +1,3 @@
-import PersistentDrawerLeft from './Sidenav';
+import PersistentDrawerLeft from './MainContainer';
 
 export {PersistentDrawerLeft};
