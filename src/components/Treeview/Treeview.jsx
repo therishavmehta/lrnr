@@ -48,7 +48,7 @@ function RecursiveTreeView(props) {
     const [treeData, changeTreeData] = React.useState(data);
     const classes = useStyles();
     const addLibrary = (node) => {
-        node.push({id: '10', name: 'fsfsdf', children: []});
+        // node.push({id: '10', name: 'fsfsdf', children: []});
     }
     const addChildren = (node, name) => {
         console.log(node);
